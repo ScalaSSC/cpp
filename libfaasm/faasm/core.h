@@ -168,9 +168,9 @@ extern "C"
      * Chains a function with the given input data with the current messageIdx
      */
     unsigned int faasmChainNamedId(const char* name,
-                                 const uint8_t* inputData,
-                                 long inputDataSize,
-                                 int idx);
+                                   const uint8_t* inputData,
+                                   long inputDataSize,
+                                   int idx);
 
     /**
      * Chains a function from this module with the given input data
@@ -279,6 +279,30 @@ extern "C"
      * any functionstate object. It will also unlock the function after writing.
      */
     void faasmWriteFunctionStateUnlock(const uint8_t* data, long dataLen);
+
+    /**********
+     * The following three functions are used for partitioned stateful function.
+     **********/
+
+    /**
+     * Read the size of the partitioned function state, with input keys. We only
+     * retrieve the needed values.
+     */
+    size_t faasmReadPartitionedFunctionStateSizeLock(const char* inputKeys);
+
+    /**
+     * Read the the partitioned function state, with input keys. We only
+     * retrieve the needed values. bufferLen is currently unused.
+     */
+    long faasmReadPartitionedFunctionState(unsigned char* buffer,
+                                           long bufferLen,
+                                           const char* inputKeys);
+
+    /**
+     * Write the updated partitioned function state back.
+     */
+    void faasmWritePartitionedFunctionStateUnlock(const uint8_t* data,
+                                                  long dataLen);
 
     long faasmFunctionStateLock();
 

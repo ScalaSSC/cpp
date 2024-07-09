@@ -14,6 +14,10 @@ void setStringOutput(const char* val);
 int getIntInput();
 
 int* parseStringToIntArray(const char* inStr, int expected);
+
+// We use "|" to concat string, please make use the input partitioned keys do
+// not contain "|"
+const std::string concatInput(const std::vector<std::string>& input);
 }
 
 #endif

@@ -312,6 +312,24 @@ uint8_t* faasmReadFunctionStatePtrLock()
     return __faasm_read_function_state_ptr_lock();
 }
 
+size_t faasmReadPartitionedFunctionStateSizeLock(const char* inputKeys)
+{
+    return __faasm_read_partitioned_function_state_size_lock(inputKeys);
+}
+
+long faasmReadPartitionedFunctionState(unsigned char* buffer,
+                                       long bufferLen,
+                                       const char* inputKeys)
+{
+    return __faasm_read_partitioned_function_state(
+      buffer, bufferLen, inputKeys);
+}
+
+void faasmWritePartitionedFunctionStateUnlock(const uint8_t* data, long dataLen)
+{
+    __faasm_write_partitioned_function_state_unlock(data, dataLen);
+}
+
 /**
  * Write the function state into state server. This function won't create
  * any functionstate object. It will also unlock the function after writing.

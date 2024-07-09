@@ -102,7 +102,7 @@ void __faasm_write_output(const char* output, long outputLen);
 HOST_IFACE_FUNC
 unsigned int __faasm_chain_name(const char* name,
                                 const unsigned char* inputData,
-                                long inputDataSize, 
+                                long inputDataSize,
                                 int idx);
 
 HOST_IFACE_FUNC
@@ -176,8 +176,7 @@ void __faasm_write_function_state(const unsigned char* data, long dataLen);
 // Read the function state from state server. If it is partitioned stateful,
 // paasing the inputKeys will return required the states.
 HOST_IFACE_FUNC
-long __faasm_read_function_state(unsigned char* buffer,
-                                 long bufferLen);
+long __faasm_read_function_state(unsigned char* buffer, long bufferLen);
 
 HOST_IFACE_FUNC
 unsigned char* __faasm_read_function_state_ptr_lock();
@@ -198,4 +197,17 @@ long __faasm_read_function_state_size(int lock);
 
 HOST_IFACE_FUNC
 void __faasm_chain_invoke();
+
+HOST_IFACE_FUNC
+size_t __faasm_read_partitioned_function_state_size_lock(const char* inputKeys);
+
+HOST_IFACE_FUNC
+long __faasm_read_partitioned_function_state(unsigned char* buffer,
+                                             long bufferLen,
+                                             const char* inputKeys);
+
+HOST_IFACE_FUNC
+void __faasm_write_partitioned_function_state_unlock(const uint8_t* data,
+                                                     long dataLen);
+
 #endif

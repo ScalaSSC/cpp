@@ -25,7 +25,8 @@ const char* getStringInput(const char* defaultValue)
 }
 
 // We use Vec here since, sometimes input cannot cast to string
-const std::vector<uint8_t> getInputVec(){
+const std::vector<uint8_t> getInputVec()
+{
     long inputSize = faasmGetInputSize();
     if (inputSize == 0) {
         return std::vector<uint8_t>();
@@ -66,4 +67,27 @@ int* parseStringToIntArray(const char* strIn, int nInts)
 
     return result;
 }
+
+const std::string concatInput(const std::vector<std::string>& input)
+{
+    std::string result;
+    bool first = true; // To avoid leading delimiter
+
+    for (const auto& str : input) {
+        if (str.find('|') != std::string::npos) {
+            throw std::invalid_argument(
+              "Input string contains an delimiter character: '|'");
+        }
+
+        if (!str.empty()) {
+            if (!first) {
+                result += '|';
+            }
+            result += str;
+            first = false;
+        }
+    }
+    return result;
+}
+
 } // namespace faasm

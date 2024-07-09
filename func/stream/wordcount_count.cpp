@@ -1,12 +1,15 @@
 #include "faasm/input.h"
 #include <faasm/faasm.h>
+#include <faasm/input.h>
 #include <faasm/serialization.h>
 #include <iostream>
 #include <map>
 #include <string>
 #include <vector>
 
-// TODO -     auto t0 = std::chrono::system_clock::now(); might contains bug
+// TODO - auto t0 = std::chrono::system_clock::now() might contains bug
+// We cannot record time correctly inside the function. Always Overflow.
+
 // We must register the function_state in scheduler!
 
 int main(int argc, char* argv[])
@@ -18,22 +21,27 @@ int main(int argc, char* argv[])
     std::map<std::string, std::map<std::string, std::string>> inputMap =
       faasm::deserializeNestedMap(vec, index);
 
-    // get the functionstate
-    size_t readSize = faasmReadFunctionStateSizeLock();
-    std::map<std::string, std::vector<uint8_t>> functionState;
-    if (readSize == 0) {
-        functionState["partitionStateKey"] = {};
-    } else {
-        std::vector<uint8_t> stateBuffer(readSize);
-        faasmReadFunctionState(stateBuffer.data(), readSize);
-        functionState = faasm::deserializeFuncState(stateBuffer);
+    // concat the input string
+    std::vector<std::string> inputKeys;
+    for (size_t i = 0; i < inputMap.size(); i++) {
+        // get the input for this spefic function invoke.
+        std::string inputParStr =
+          inputMap[std::to_string(i)]["partitionInputKey"];
+        inputKeys.push_back(inputParStr);
     }
 
-    // get the partitionstate from functionstate
-    std::map<std::string, std::vector<uint8_t>> parFunctionState;
-    if (functionState["partitionStateKey"].size() != 0) {
-        parFunctionState =
-          faasm::deserializeParState(functionState["partitionStateKey"]);
+    std::string inputKeysStr = faasm::concatInput(inputKeys);
+
+    // get the functionstate
+    size_t readSize =
+      faasmReadPartitionedFunctionStateSizeLock(inputKeysStr.c_str());
+
+    std::map<std::string, std::vector<uint8_t>> partitionedState;
+    if (readSize != 0) {
+        std::vector<uint8_t> stateBuffer(readSize);
+        faasmReadPartitionedFunctionState(
+          stateBuffer.data(), readSize, inputKeysStr.c_str());
+        partitionedState = faasm::deserializeParState(stateBuffer);
     }
 
     /*
@@ -42,33 +50,35 @@ int main(int argc, char* argv[])
 
     for (size_t i = 0; i < inputMap.size(); i++) {
         // get the input for this spefic function invoke.
-        std::string inputParStr = inputMap[std::to_string(i)]["partitionInputKey"];
-    
+        std::string inputParStr =
+          inputMap[std::to_string(i)]["partitionInputKey"];
+
         // increament the count
         int count = 0;
-        if (parFunctionState.find(inputParStr) != parFunctionState.end()) {
-            count = faasm::uint8VToUint32(parFunctionState[inputParStr]);
+        if (partitionedState.find(inputParStr) != partitionedState.end()) {
+            count = faasm::uint8VToUint32(partitionedState[inputParStr]);
         }
         count++;
-        parFunctionState[inputParStr] = faasm::uint32ToUint8V(count);
+        partitionedState[inputParStr] = faasm::uint32ToUint8V(count);
     }
-    
-    // Print the parFunctionState
-    // std::cout << "Printing the partitioned function state" << std::endl;
-    // for (auto const& x : parFunctionState) {
-    //     std::cout << x.first << " : " << faasm::uint8VToUint32(x.second) << std::endl;
-    // }
+
+    for (const auto& pair : partitionedState) {
+        std::cout << pair.first << ": ";
+        int count = faasm::uint8VToUint32(pair.second);
+        std::cout << count;
+        std::cout << std::endl;
+    }
 
     /*
     After the loop
     */
-    functionState["partitionStateKey"] =
-      faasm::serializeParState(parFunctionState);
+
     // write data back
-    std::vector<uint8_t> functionStateBytes =
-      faasm::serializeFuncState(functionState);
-    faasmWriteFunctionStateUnlock(functionStateBytes.data(),
-                                  functionStateBytes.size());
+    
+    std::vector<uint8_t> partitionedStateBytes =
+      faasm::serializeParState(partitionedState);
+    faasmWritePartitionedFunctionStateUnlock(partitionedStateBytes.data(),
+                                             partitionedStateBytes.size());
 
     return 0;
 }
