@@ -62,12 +62,12 @@ int main(int argc, char* argv[])
         partitionedState[inputParStr] = faasm::uint32ToUint8V(count);
     }
 
-    for (const auto& pair : partitionedState) {
-        std::cout << pair.first << ": ";
-        int count = faasm::uint8VToUint32(pair.second);
-        std::cout << count;
-        std::cout << std::endl;
-    }
+    // for (const auto& pair : partitionedState) {
+    //     std::cout << pair.first << ": ";
+    //     int count = faasm::uint8VToUint32(pair.second);
+    //     std::cout << count;
+    //     std::cout << std::endl;
+    // }
 
     /*
     After the loop

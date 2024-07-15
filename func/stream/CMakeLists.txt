@@ -17,6 +17,9 @@ stream_func(batch_echo batch_echo.cpp)
 stream_func(wordcount_source wordcount_source.cpp)
 stream_func(wordcount_split wordcount_split.cpp)
 stream_func(wordcount_count wordcount_count.cpp)
+stream_func(wordcountindiv_source wordcountindiv_source.cpp)
+stream_func(wordcountindiv_split wordcountindiv_split.cpp)
+stream_func(wordcountindiv_count wordcountindiv_count.cpp)
 
 # Custom target to group all the stream functions
 add_custom_target(stream_all_funcs DEPENDS ${ALL_STREAM_FUNCS})

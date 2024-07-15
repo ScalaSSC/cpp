@@ -252,13 +252,13 @@ void faasmCreateFunctionState(const unsigned char* data, long dataLen)
  * partitioned by the input key, e.g. ID. The stateKey is used to store
  * the partitioned state.
  */
-void faasmCreatePartitionedFunctionState(const uint8_t* data,
-                                         long dataLen,
-                                         const char* inputKey,
-                                         const char* stateKey)
-{
-    __faasm_create_function_state(data, dataLen, inputKey, stateKey);
-}
+// void faasmCreatePartitionedFunctionState(const uint8_t* data,
+//                                          long dataLen,
+//                                          const char* inputKey,
+//                                          const char* stateKey)
+// {
+//     __faasm_create_function_state(data, dataLen, inputKey, stateKey);
+// }
 
 /**
  * Write the Function level state into State Storage
@@ -292,16 +292,6 @@ long faasmReadFunctionState(unsigned char* buffer, long bufferLen)
     return __faasm_read_function_state(buffer, bufferLen);
 }
 
-// /**
-//  * Read function state. InputKeys is used for partitioned stateful.
-//  */
-// long faasmReadParitionedFunctionState(unsigned char* buffer,
-//                                       long bufferLen,
-//                                       const char* inputKeys)
-// {
-//     return __faasm_read_function_state(buffer, bufferLen, inputKeys);
-// }
-
 /**
  * Read function state data. It returns a pointer of vector<uint8_t>. If
  * nullptr is returned, means this state is created but not initialized. In
@@ -328,6 +318,24 @@ long faasmReadPartitionedFunctionState(unsigned char* buffer,
 void faasmWritePartitionedFunctionStateUnlock(const uint8_t* data, long dataLen)
 {
     __faasm_write_partitioned_function_state_unlock(data, dataLen);
+}
+
+unsigned int faasmReadIndivFunctionStateSizeLock(const char* inputKeys,
+                                                 uint8_t* lockedKeys)
+{
+    return __faasm_read_indiv_function_state_size_lock(inputKeys, lockedKeys);
+}
+
+long faasmReadIndivFunctionState(unsigned char* buffer,
+                                 long bufferLen,
+                                 const char* inputKeys)
+{
+    return __faasm_read_indiv_function_state(buffer, bufferLen, inputKeys);
+}
+
+void faasmWriteIndivFunctionStateUnlock(const uint8_t* data, long dataLen)
+{
+    __faasm_write_indiv_function_state_unlock(data, dataLen);
 }
 
 /**

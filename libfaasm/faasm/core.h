@@ -304,6 +304,19 @@ extern "C"
     void faasmWritePartitionedFunctionStateUnlock(const uint8_t* data,
                                                   long dataLen);
 
+    /**
+     * The fllowing access data and hold the 'indivadual' lock.
+     */
+    // Return is the locked key and the size of the state.
+    unsigned int faasmReadIndivFunctionStateSizeLock(const char* inputKeys,
+                                                     uint8_t* lockedKeys);
+
+    long faasmReadIndivFunctionState(unsigned char* buffer,
+                                     long bufferLen,
+                                     const char* inputKeys);
+
+    void faasmWriteIndivFunctionStateUnlock(const uint8_t* data, long dataLen);
+
     long faasmFunctionStateLock();
 
     void faasmFunctionStateUnlock();

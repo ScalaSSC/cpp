@@ -210,4 +210,17 @@ HOST_IFACE_FUNC
 void __faasm_write_partitioned_function_state_unlock(const uint8_t* data,
                                                      long dataLen);
 
+HOST_IFACE_FUNC
+unsigned int __faasm_read_indiv_function_state_size_lock(
+  const char* inputKeys,
+  unsigned char* lockedKeys);
+
+HOST_IFACE_FUNC
+long __faasm_read_indiv_function_state(unsigned char* buffer,
+                                       long bufferLen,
+                                       const char* inputKeys);
+HOST_IFACE_FUNC
+void __faasm_write_indiv_function_state_unlock(const uint8_t* data,
+                                               long dataLen);
+
 #endif
