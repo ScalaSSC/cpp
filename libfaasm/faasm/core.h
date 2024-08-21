@@ -323,6 +323,12 @@ extern "C"
 
     void faasmChainInvoke();
 
+    /**
+     * Sets the given string as the output data for this function of specified
+     * Msg in the batch processing
+     */
+    void faasmSetOutputId(const char* newOutput, long outputLen, int idx);
+
     // Macro for defining zygotes (a default fallback noop is provided)
     int __attribute__((weak)) _faasm_zygote();
 #define FAASM_ZYGOTE() int _faasm_zygote()

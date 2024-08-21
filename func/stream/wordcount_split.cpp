@@ -32,7 +32,7 @@ int main(int argc, char* argv[])
                 if (!word.empty()) {
                     // Prepare for chain call
                     std::map<std::string, std::string> chainedInput;
-                    chainedInput["partitionInputKey"] = word;
+                    chainedInput["partitionedAttribute"] = word;
                     std::vector<uint8_t> chainedInputBytes;
                     faasm::serializeMap(chainedInputBytes, chainedInput);
                     faasmChainNamedId("wordcount_count",
@@ -48,7 +48,7 @@ int main(int argc, char* argv[])
         if (!word.empty()) {
             // Prepare for chain call
             std::map<std::string, std::string> chainedInput;
-            chainedInput["partitionInputKey"] = word;
+            chainedInput["partitionedAttribute"] = word;
             std::vector<uint8_t> chainedInputBytes;
             faasm::serializeMap(chainedInputBytes, chainedInput);
 

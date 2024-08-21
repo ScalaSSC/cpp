@@ -166,7 +166,7 @@ unsigned int faasmChainNamed(const char* name,
 }
 
 // This function is desiged for batch processing, the message has to call the
-// with idx
+// with current msg idx (used for chained record)
 unsigned int faasmChainNamedId(const char* name,
                                const uint8_t* inputData,
                                long inputDataSize,
@@ -360,4 +360,8 @@ void faasmFunctionStateUnlock()
 void faasmChainInvoke()
 {
     __faasm_chain_invoke();
+}
+
+void faasmSetOutputId(const char* newOutput, long outputLen, int idx){
+    __faasm_set_output_id(newOutput, outputLen, idx);
 }

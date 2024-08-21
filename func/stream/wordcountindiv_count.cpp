@@ -49,13 +49,12 @@ int main(int argc, char* argv[])
       faasm::deserializeNestedMap(vec, index);
 
     // concat the input string
-    std::vector<std::string> inputKeys;
+    std::vector<std::string> todoKeys;
     std::map<std::string, int> todoKeysMap;
     for (size_t i = 0; i < inputMap.size(); i++) {
         // get the input for this spefic function invoke.
         std::string inputParStr =
-          inputMap[std::to_string(i)]["partitionInputKey"];
-        inputKeys.push_back(inputParStr);
+          inputMap[std::to_string(i)]["parititonedAttribute"];
         if (todoKeysMap.find(inputParStr) != todoKeysMap.end()) {
             todoKeysMap[inputParStr]++;
         } else {
@@ -65,18 +64,19 @@ int main(int argc, char* argv[])
 
     // BEGIN the loop
     while (todoKeysMap.size() > 0) {
-        std::string inputKeysStr = faasm::concatInput(inputKeys);
-        // printf("Input keys string: %s\n", inputKeysStr.c_str());
-        // printf("the size of inputKeysStr: %zu\n", inputKeysStr.size());
-        int lockedKeysSize = inputKeysStr.size() + 1;
-        // printf("the size of lockedKeysSize: %d\n", lockedKeysSize);
+        todoKeys.clear();
+        for (const auto& pair : todoKeysMap) {
+            todoKeys.push_back(pair.first);
+        }
+        std::string todoKeysStr = faasm::concatInput(todoKeys);
+        // Initialize the locked keys
+        int lockedKeysSize = todoKeysStr.size() + 1;
         auto lockedKeys = new uint8_t[lockedKeysSize];
         // get the functionstate
         size_t readSize =
-          faasmReadIndivFunctionStateSizeLock(inputKeysStr.c_str(), lockedKeys);
+          faasmReadIndivFunctionStateSizeLock(todoKeysStr.c_str(), lockedKeys);
 
         std::string lockedKeysStr(reinterpret_cast<char*>(lockedKeys));
-        // printf("Locked keys string: %s\n", lockedKeysStr.c_str());
         auto lockedKeysSet = splitStringToSet(lockedKeysStr, "|");
 
         std::map<std::string, std::vector<uint8_t>> partitionedState;
@@ -97,7 +97,12 @@ int main(int argc, char* argv[])
             partitionedState[key] = faasm::uint32ToUint8V(count);
         }
         // write data back
-
+        for (const auto& pair : partitionedState) {
+            std::cout << pair.first << ": ";
+            int count = faasm::uint8VToUint32(pair.second);
+            std::cout << count;
+            std::cout << std::endl;
+        }
         std::vector<uint8_t> partitionedStateBytes =
           faasm::serializeParState(partitionedState);
         faasmWriteIndivFunctionStateUnlock(partitionedStateBytes.data(),

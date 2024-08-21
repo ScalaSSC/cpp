@@ -20,6 +20,11 @@ stream_func(wordcount_count wordcount_count.cpp)
 stream_func(wordcountindiv_source wordcountindiv_source.cpp)
 stream_func(wordcountindiv_split wordcountindiv_split.cpp)
 stream_func(wordcountindiv_count wordcountindiv_count.cpp)
+stream_func(sd_moving_avg sd_moving_avg.cpp)
+stream_func(sd_spike_detect sd_spike_detect.cpp)
+stream_func(mo_alert mo_alert.cpp)
+stream_func(mo_anomaly mo_anomaly.cpp)
+stream_func(mo_score mo_score.cpp)
 
 # Custom target to group all the stream functions
 add_custom_target(stream_all_funcs DEPENDS ${ALL_STREAM_FUNCS})

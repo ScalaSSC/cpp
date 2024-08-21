@@ -41,7 +41,7 @@ int main(int argc, char* argv[])
                message.c_str());
 
         std::map<std::string, std::string> input;
-        input["partitionInputKey"] = message;
+        input["partitionedAttribute"] = message;
         input["key2"] = "key2value";
         std::vector<uint8_t> inputBytes;
         faasm::serializeMap(inputBytes, input);

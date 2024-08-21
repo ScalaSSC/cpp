@@ -1,5 +1,6 @@
 #include "faasm/input.h"
 #include "faasm/core.h"
+#include "faasm/serialization.h"
 
 #include <stdint.h>
 #include <string.h>
@@ -36,6 +37,17 @@ const std::vector<uint8_t> getInputVec()
 
     // Convert to string if returning is necessary
     return inputBuffer;
+}
+
+const std::map<std::string, std::map<std::string, std::string>> getInputMap()
+{
+    // get the inputMap (inputdata)
+    std::vector<uint8_t> vec = getInputVec();
+
+    size_t index = 0; // Reset index if reusing buffer
+    auto inputMap = faasm::deserializeNestedMap(vec, index);
+
+    return inputMap;
 }
 
 int getIntInput()
@@ -88,6 +100,33 @@ const std::string concatInput(const std::vector<std::string>& input)
         }
     }
     return result;
+}
+
+// Function to split a string by a delimiter and store the elements in a set
+std::set<std::string> splitStringToSet(const std::string& str,
+                                       const std::string& delimiter)
+{
+    std::set<std::string> resultSet;
+    std::size_t start = 0;
+    std::size_t end;
+    std::size_t delimiter_length = delimiter.length();
+
+    while ((end = str.find(delimiter, start)) != std::string::npos) {
+        std::string token = str.substr(start, end - start);
+        if (!token.empty()) {
+            resultSet.insert(std::move(token));
+        }
+        start = end + delimiter_length;
+    }
+
+    // Add the last token if it's not empty
+    std::string token = str.substr(start);
+    if (!token.empty()) {
+        resultSet.insert(std::move(token));
+    }
+
+    // Return the set using std::move to avoid reconstruction
+    return std::move(resultSet);
 }
 
 } // namespace faasm

@@ -64,7 +64,7 @@ int main(int argc, char* argv[])
     printf("inputMap size: %ld\n", inputMap.size());
     for (size_t i = 0; i < inputMap.size(); i++) {
         // get the input for this spefic function invoke.
-        std::string inputParStr = inputMap[std::to_string(i)]["partitionInputKey"];
+        std::string inputParStr = inputMap[std::to_string(i)]["partitionedAttribute"];
     
         // print the input par
         printf("the ith: %zu is inputParStr: %s\n", i, inputParStr.c_str());

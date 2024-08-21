@@ -26,7 +26,7 @@ int main(int argc, char* argv[])
     for (size_t i = 0; i < inputMap.size(); i++) {
         // get the input for this spefic function invoke.
         std::string inputParStr =
-          inputMap[std::to_string(i)]["partitionInputKey"];
+          inputMap[std::to_string(i)]["partitionedAttribute"];
         inputKeys.push_back(inputParStr);
     }
 
@@ -51,7 +51,7 @@ int main(int argc, char* argv[])
     for (size_t i = 0; i < inputMap.size(); i++) {
         // get the input for this spefic function invoke.
         std::string inputParStr =
-          inputMap[std::to_string(i)]["partitionInputKey"];
+          inputMap[std::to_string(i)]["partitionedAttribute"];
 
         // increament the count
         int count = 0;

@@ -223,4 +223,7 @@ HOST_IFACE_FUNC
 void __faasm_write_indiv_function_state_unlock(const uint8_t* data,
                                                long dataLen);
 
+HOST_IFACE_FUNC
+void __faasm_set_output_id(const char* newOutput, long outputLen, int idx);
+
 #endif
