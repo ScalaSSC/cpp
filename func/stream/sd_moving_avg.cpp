@@ -83,6 +83,8 @@ int main(int argc, char* argv[])
           std::tuple<size_t, double>(i, inputData));
     }
 
+    uint64_t start = faasmGetMicros();
+
     while (todoKeysMap.size() > 0) {
         // Collect todoKeys to string
         std::vector<std::string> todoKeys;
@@ -155,6 +157,16 @@ int main(int argc, char* argv[])
           faasm::serializeParState(partitionedState);
         faasmWriteIndivFunctionStateUnlock(partitionedStateBytes.data(),
                                            partitionedStateBytes.size());
+    }
+
+    uint64_t end = faasmGetMicros();
+    uint64_t diff = end - start;
+    // Print start, end, and duration in microseconds
+
+    std::string output =
+      "mo_moving_avg_duration:" + std::to_string(diff);
+    for (size_t i = 0; i < inputMap.size(); i++) {
+        faasmSetOutputId(output.c_str(), output.size(), 0);
     }
 
     faasmChainInvoke();

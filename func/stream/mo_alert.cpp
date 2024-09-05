@@ -197,6 +197,8 @@ int main(int argc, char* argv[])
     // get the inputMap (inputdata)
     auto inputMap = faasm::getInputMap();
 
+    uint64_t start = faasmGetMicros();
+
     // Get the Function
     size_t readSize = faasmReadFunctionStateSizeLock();
     long prevTimestamp;
@@ -314,5 +316,16 @@ int main(int argc, char* argv[])
     // std::cout << oss4.str() << std::endl;
     std::vector<uint8_t> stateBytes = serialize(dataTuple);
     faasmWriteFunctionStateUnlock(stateBytes.data(), stateBytes.size());
+
+    uint64_t end = faasmGetMicros();
+    uint64_t diff = end - start;
+    // Print start, end, and duration in microseconds
+
+    std::string output =
+      "mo_alert_duration:" + std::to_string(diff);
+    for (size_t i = 0; i < inputMap.size(); i++) {
+        faasmSetOutputId(output.c_str(), output.size(), 0);
+    }
+
     return 0;
 }

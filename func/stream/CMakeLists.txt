@@ -25,6 +25,7 @@ stream_func(sd_spike_detect sd_spike_detect.cpp)
 stream_func(mo_alert mo_alert.cpp)
 stream_func(mo_anomaly mo_anomaly.cpp)
 stream_func(mo_score mo_score.cpp)
+stream_func(stateful_exp stateful_exp.cpp)
 
 # Custom target to group all the stream functions
 add_custom_target(stream_all_funcs DEPENDS ${ALL_STREAM_FUNCS})

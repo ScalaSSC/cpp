@@ -322,6 +322,8 @@ extern "C"
     void faasmFunctionStateUnlock();
 
     void faasmChainInvoke();
+    
+    uint64_t faasmGetMicros();
 
     /**
      * Sets the given string as the output data for this function of specified

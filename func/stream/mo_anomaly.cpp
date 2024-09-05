@@ -72,6 +72,8 @@ int main(int argc, char* argv[])
     // }
     // std::cout << oss.str() << std::endl;
 
+    uint64_t start = faasmGetMicros();
+
     while (todoKeysMap.size() > 0) {
         // Collect todoKeys to string
         std::vector<std::string> todoKeys;
@@ -95,7 +97,7 @@ int main(int argc, char* argv[])
                 long timestamp = std::get<2>(todoData);
 
                 pastScores.push_back(score);
-                if (pastScores.size() == windowlength) {
+                if (pastScores.size() > windowlength) {
                     pastScores.pop_front();
                 }
 
@@ -142,6 +144,16 @@ int main(int argc, char* argv[])
           faasm::serializeParState(partitionedState);
         faasmWriteIndivFunctionStateUnlock(partitionedStateBytes.data(),
                                            partitionedStateBytes.size());
+    }
+
+    uint64_t end = faasmGetMicros();
+    uint64_t diff = end - start;
+    // Print start, end, and duration in microseconds
+
+    std::string output =
+      "mo_score_anomaly:" + std::to_string(diff);
+    for (size_t i = 0; i < inputMap.size(); i++) {
+        faasmSetOutputId(output.c_str(), output.size(), 0);
     }
 
     faasmChainInvoke();

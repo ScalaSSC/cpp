@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include <time.h>
+#include <cstdint>
 
 // Turn on timings when not building wasm or when WASM_PROF requested
 #if WASM_PROF == 1 || __wasm__ != 1
@@ -17,6 +18,8 @@
 
 namespace faasm {
 double getSecondsSinceEpoch();
+double getMillisSinceEpoch();
+int64_t getNanosecondsSinceEpoch();
 }
 
 #endif

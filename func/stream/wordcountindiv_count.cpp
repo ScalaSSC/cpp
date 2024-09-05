@@ -54,13 +54,15 @@ int main(int argc, char* argv[])
     for (size_t i = 0; i < inputMap.size(); i++) {
         // get the input for this spefic function invoke.
         std::string inputParStr =
-          inputMap[std::to_string(i)]["parititonedAttribute"];
+          inputMap[std::to_string(i)]["partitionedAttribute"];
         if (todoKeysMap.find(inputParStr) != todoKeysMap.end()) {
             todoKeysMap[inputParStr]++;
         } else {
             todoKeysMap[inputParStr] = 1;
         }
     }
+
+    uint64_t start = faasmGetMicros();
 
     // BEGIN the loop
     while (todoKeysMap.size() > 0) {
@@ -107,6 +109,16 @@ int main(int argc, char* argv[])
           faasm::serializeParState(partitionedState);
         faasmWriteIndivFunctionStateUnlock(partitionedStateBytes.data(),
                                            partitionedStateBytes.size());
+    }
+
+    uint64_t end = faasmGetMicros();
+    uint64_t diff = end - start;
+    // Print start, end, and duration in microseconds
+
+    std::string output =
+      "wordcount_count_lock_duration:" + std::to_string(diff);
+    for (size_t i = 0; i < inputMap.size(); i++) {
+        faasmSetOutputId(output.c_str(), output.size(), 0);
     }
 
     // printf("finished");

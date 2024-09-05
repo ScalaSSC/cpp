@@ -192,6 +192,9 @@ int main(int argc, char* argv[])
     // get the inputMap (inputdata)
     auto inputMap = faasm::getInputMap();
 
+    uint64_t start = faasmGetMicros();
+
+
     // Get and initialize the Function
     size_t readSize = faasmReadFunctionStateSizeLock();
     std::vector<std::tuple<int, double, double, long>> observationList;
@@ -271,6 +274,16 @@ int main(int argc, char* argv[])
 
     std::vector<uint8_t> stateBytes = serialize(observationList, prevTimestamp);
     faasmWriteFunctionStateUnlock(stateBytes.data(), stateBytes.size());
+
+    uint64_t end = faasmGetMicros();
+    uint64_t diff = end - start;
+    // Print start, end, and duration in microseconds
+
+    std::string output =
+      "mo_score_duration:" + std::to_string(diff);
+    for (size_t i = 0; i < inputMap.size(); i++) {
+        faasmSetOutputId(output.c_str(), output.size(), 0);
+    }
 
     faasmChainInvoke();
     return 0;

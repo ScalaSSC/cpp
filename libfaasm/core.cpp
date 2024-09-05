@@ -365,3 +365,8 @@ void faasmChainInvoke()
 void faasmSetOutputId(const char* newOutput, long outputLen, int idx){
     __faasm_set_output_id(newOutput, outputLen, idx);
 }
+
+// Get the current time in microseconds
+uint64_t faasmGetMicros(){
+    return __faasm_get_micros();
+}
