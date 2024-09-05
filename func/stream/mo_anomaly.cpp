@@ -151,7 +151,7 @@ int main(int argc, char* argv[])
     // Print start, end, and duration in microseconds
 
     std::string output =
-      "mo_score_anomaly:" + std::to_string(diff);
+      "mo_score_anomaly_duration:" + std::to_string(diff);
     for (size_t i = 0; i < inputMap.size(); i++) {
         faasmSetOutputId(output.c_str(), output.size(), 0);
     }
