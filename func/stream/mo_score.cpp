@@ -279,10 +279,11 @@ int main(int argc, char* argv[])
     uint64_t diff = end - start;
     // Print start, end, and duration in microseconds
 
+    int inputSize = inputMap.size();
     std::string output =
-      "mo_score_duration:" + std::to_string(diff);
+      "mo_score_input_size: " + std::to_string(inputSize) + " and duration:" + std::to_string(diff);
     for (size_t i = 0; i < inputMap.size(); i++) {
-        faasmSetOutputId(output.c_str(), output.size(), 0);
+        faasmSetOutputId(output.c_str(), output.size(), i);
     }
 
     faasmChainInvoke();
