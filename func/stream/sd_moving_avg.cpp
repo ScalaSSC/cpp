@@ -131,22 +131,22 @@ int main(int argc, char* argv[])
                                   idx);
             }
             // Print : used for testing
-            {
-                std::string valuesStr = "[";
-                for (auto it = values.begin(); it != values.end(); ++it) {
-                    valuesStr += std::to_string(*it);
-                    if (std::next(it) != values.end()) {
-                        valuesStr += ", ";
-                    }
-                }
-                valuesStr += "]";
+            // {
+            //     std::string valuesStr = "[";
+            //     for (auto it = values.begin(); it != values.end(); ++it) {
+            //         valuesStr += std::to_string(*it);
+            //         if (std::next(it) != values.end()) {
+            //             valuesStr += ", ";
+            //         }
+            //     }
+            //     valuesStr += "]";
 
-                // Print out statistics including the values in one line
-                std::cout << "Key: " << key << ", Count: " << values.size()
-                          << ", Sum: " << sum
-                          << ", Average: " << (sum / values.size())
-                          << ", Values: " << valuesStr << std::endl;
-            }
+            //     // Print out statistics including the values in one line
+            //     std::cout << "Key: " << key << ", Count: " << values.size()
+            //               << ", Sum: " << sum
+            //               << ", Average: " << (sum / values.size())
+            //               << ", Values: " << valuesStr << std::endl;
+            // }
             std::pair<double, std::list<double>> newStatistics = { sum,
                                                                    values };
             std::vector<uint8_t> newStatisticsBytes = serialize(newStatistics);

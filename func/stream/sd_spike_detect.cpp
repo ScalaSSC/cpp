@@ -24,15 +24,15 @@ int main(int argc, char* argv[])
             spikeThreshold * movingAverage) {
             std::string output = "detected spike";
             faasmSetOutputId(output.c_str(), output.size(), i);
-            std::cout << "Input " << i << ": Moving Average = " << movingAverage
-                      << ", Temperature = " << temperature
-                      << ", Status = Detected" << std::endl;
+            // std::cout << "Input " << i << ": Moving Average = " << movingAverage
+            //           << ", Temperature = " << temperature
+            //           << ", Status = Detected" << std::endl;
         } else {
             std::string output = "no spike";
             faasmSetOutputId(output.c_str(), output.size(), i);
-            std::cout << "Input " << i << ": Moving Average = " << movingAverage
-                      << ", Temperature = " << temperature
-                      << ", Status = Undetected" << std::endl;
+            // std::cout << "Input " << i << ": Moving Average = " << movingAverage
+            //           << ", Temperature = " << temperature
+            //           << ", Status = Undetected" << std::endl;
         }
     }
 
