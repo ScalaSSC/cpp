@@ -99,12 +99,12 @@ int main(int argc, char* argv[])
             partitionedState[key] = faasm::uint32ToUint8V(count);
         }
         // write data back
-        for (const auto& pair : partitionedState) {
-            std::cout << pair.first << ": ";
-            int count = faasm::uint8VToUint32(pair.second);
-            std::cout << count;
-            std::cout << std::endl;
-        }
+        // for (const auto& pair : partitionedState) {
+        //     std::cout << pair.first << ": ";
+        //     int count = faasm::uint8VToUint32(pair.second);
+        //     std::cout << count;
+        //     std::cout << std::endl;
+        // }
         std::vector<uint8_t> partitionedStateBytes =
           faasm::serializeParState(partitionedState);
         faasmWriteIndivFunctionStateUnlock(partitionedStateBytes.data(),
