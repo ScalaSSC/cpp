@@ -347,16 +347,6 @@ void faasmWriteFunctionStateUnlock(const uint8_t* data, long dataLen)
     __faasm_write_function_state_unlock(data, dataLen);
 }
 
-long faasmFunctionStateLock()
-{
-    return __faasm_function_state_lock();
-}
-
-void faasmFunctionStateUnlock()
-{
-    __faasm_function_state_unlock();
-}
-
 void faasmChainInvoke()
 {
     __faasm_chain_invoke();

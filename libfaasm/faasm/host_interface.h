@@ -185,11 +185,6 @@ HOST_IFACE_FUNC
 void __faasm_write_function_state_unlock(const unsigned char* data,
                                          long dataLen);
 
-HOST_IFACE_FUNC
-long __faasm_function_state_lock();
-
-HOST_IFACE_FUNC
-void __faasm_function_state_unlock();
 
 // lock == 0 means false, lock == 1 means true.
 HOST_IFACE_FUNC

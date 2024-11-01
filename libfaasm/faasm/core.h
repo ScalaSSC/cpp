@@ -317,10 +317,6 @@ extern "C"
 
     void faasmWriteIndivFunctionStateUnlock(const uint8_t* data, long dataLen);
 
-    long faasmFunctionStateLock();
-
-    void faasmFunctionStateUnlock();
-
     void faasmChainInvoke();
     
     uint64_t faasmGetMicros();
