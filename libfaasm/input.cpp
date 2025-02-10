@@ -5,6 +5,7 @@
 #include <stdint.h>
 #include <string.h>
 #include <string>
+#include <stdexcept>
 
 namespace faasm {
 const char* getStringInput(const char* defaultValue)
