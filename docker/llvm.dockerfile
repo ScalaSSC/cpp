@@ -48,7 +48,7 @@ RUN apt remove --purge --auto-remove cmake \
 ARG SYSROOT_VERSION
 RUN mkdir -p /code \
     && git clone -b v${SYSROOT_VERSION} \
-        https://github.com/faasm/cpp \
+        https://github.com/ScalaSSC/cpp \
         /code/cpp \
     && cd /code/cpp \
     && git submodule update --init -f third-party/wasi-libc \
