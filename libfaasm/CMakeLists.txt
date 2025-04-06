@@ -35,6 +35,7 @@ set(LIB_FILES
     time.cpp
     zygote.cpp
     serialization.cpp
+    faasm.cpp
 )
 
 if (CMAKE_SYSTEM_NAME STREQUAL "WASI")
