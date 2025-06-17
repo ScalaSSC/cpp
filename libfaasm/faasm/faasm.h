@@ -20,10 +20,22 @@ using TodoKeysMap = std::map<std::string, std::vector<TodoKeyTuple>>;
 
 // Function declarations.
 void setOutputIdx(const std::string& outputString, int idx);
+
+void chainCallNamedId(std::string name,
+                      const std::map<std::string, std::string>& chainedInput,
+                      int idx);
+
 TodoKeysMap generateTodoKeysMap(InputMapType& inputMap,
                                 const std::string& partitionedAttributeName);
 
 // Template function declaration and definition
+// [] means mutable variable.
+// typename [State] : The type of state acted upon by each tuple.
+// typename ProcessFunc : How to process each tuple.
+//                        Input is key, todoData, and [state].
+// typename InitFunc : How to initialize the state for each input key.
+//                   Input is key and partitionedState. Output is [state].
+// typename SerializeFunc : How to serialize each [state] to vector<uint8_t>.
 template<typename State,
          typename ProcessFunc,
          typename InitFunc,

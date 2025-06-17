@@ -56,4 +56,19 @@ getPartitionedStates(const std::vector<std::string>& todoKeys)
                           std::move(partitionedState));
 }
 
+std::string getPersistentState(const std::string& key)
+{
+    int32_t str_offset = faasmReadPersistentState(key.c_str());
+
+    char* str = (char*)str_offset;
+    return str;
+}
+
+void setPersistentState(const std::string& key, const std::string& value)
+{
+    // Convert the value to a C-style string
+    const char* valueCStr = value.c_str();
+    faasmWritePersistentState(key.c_str(), valueCStr);
+}
+
 }

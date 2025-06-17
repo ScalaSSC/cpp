@@ -185,7 +185,6 @@ HOST_IFACE_FUNC
 void __faasm_write_function_state_unlock(const unsigned char* data,
                                          long dataLen);
 
-
 // lock == 0 means false, lock == 1 means true.
 HOST_IFACE_FUNC
 long __faasm_read_function_state_size(int lock);
@@ -217,6 +216,12 @@ long __faasm_read_indiv_function_state(unsigned char* buffer,
 HOST_IFACE_FUNC
 void __faasm_write_indiv_function_state_unlock(const uint8_t* data,
                                                long dataLen);
+
+HOST_IFACE_FUNC
+int32_t __faasm_read_persistent_state(const char* key);
+
+HOST_IFACE_FUNC
+void __faasm_write_persistent_state(const char* key, const char* value);
 
 HOST_IFACE_FUNC
 void __faasm_set_output_id(const char* newOutput, long outputLen, int idx);

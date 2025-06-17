@@ -63,3 +63,6 @@ __faasm_read_indiv_function_state
 __faasm_write_indiv_function_state_unlock
 __faasm_set_output_id
 __faasm_get_micros
+
+__faasm_read_persistent_state
+__faasm_write_persistent_state

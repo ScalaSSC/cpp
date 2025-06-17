@@ -8,6 +8,17 @@ void setOutputIdx(const std::string& outputString, int idx)
     faasmSetOutputId(outputString.c_str(), outputString.length(), idx);
 }
 
+void chainCallNamedId(std::string name,
+                      const std::map<std::string, std::string>& chainedInput,
+                      int idx)
+{
+    std::vector<uint8_t> chainedInputBytes;
+    faasm::serializeMap(chainedInputBytes, chainedInput);
+
+    faasmChainNamedId(
+      name.c_str(), chainedInputBytes.data(), chainedInputBytes.size(), idx);
+}
+
 TodoKeysMap generateTodoKeysMap(InputMapType& inputMap,
                                 const std::string& partitionedAttributeKey)
 {

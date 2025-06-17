@@ -19,6 +19,11 @@ void zeroState(const char* key, size_t stateLen);
 // rerturn <lockedKeys , partitionedState>
 std::pair<std::set<std::string>, std::map<std::string, std::vector<uint8_t>>>
 getPartitionedStates(const std::vector<std::string>& todoKeys);
+
+std::string getPersistentState(const std::string& key);
+
+void setPersistentState(const std::string& key, const std::string& value);
+
 } // namespace faasm
 
 #endif

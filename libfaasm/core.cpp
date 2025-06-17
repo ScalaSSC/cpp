@@ -347,16 +347,26 @@ void faasmWriteFunctionStateUnlock(const uint8_t* data, long dataLen)
     __faasm_write_function_state_unlock(data, dataLen);
 }
 
+void faasmWritePersistentState(const char* key, const char* data){
+    __faasm_write_persistent_state(key, data);
+}
+
+int32_t faasmReadPersistentState(const char* key){
+    return __faasm_read_persistent_state(key);
+}
+
 void faasmChainInvoke()
 {
     __faasm_chain_invoke();
 }
 
-void faasmSetOutputId(const char* newOutput, long outputLen, int idx){
+void faasmSetOutputId(const char* newOutput, long outputLen, int idx)
+{
     __faasm_set_output_id(newOutput, outputLen, idx);
 }
 
 // Get the current time in microseconds
-uint64_t faasmGetMicros(){
+uint64_t faasmGetMicros()
+{
     return __faasm_get_micros();
 }
