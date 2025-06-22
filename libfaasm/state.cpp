@@ -22,6 +22,46 @@ void zeroState(const char* key, size_t stateLen)
     faasmPushState(key);
 }
 
+// std::pair<std::set<std::string>, std::map<std::string, std::vector<uint8_t>>>
+// getPartitionedStates(const std::vector<std::string>& todoKeys)
+// {
+//     std::string todoKeysStr = faasm::concatInput(todoKeys);
+
+//     // Prepare the memory space for locked keys
+//     int lockedKeysSize = todoKeysStr.size() + 1;
+//     auto lockedKeys = new uint8_t[lockedKeysSize];
+
+//     // Read and lock the state size
+//     size_t readSize =
+//       faasmReadIndivFunctionStateSizeLock(todoKeysStr.c_str(), lockedKeys);
+
+//     // Get the Locked Keys
+//     std::string lockedKeysStr(reinterpret_cast<char*>(lockedKeys));
+//     delete[] lockedKeys; // Clean up allocated memory
+//     auto lockedKeysSet = faasm::splitStringToSet(lockedKeysStr, "|");
+
+//     // Initialize the partitioned state map
+//     std::map<std::string, std::vector<uint8_t>> partitionedState;
+//     if (readSize != 0) {
+//         // Read the state and deserialize it
+//         std::vector<uint8_t> stateBuffer(readSize);
+//         faasmReadIndivFunctionState(
+//           stateBuffer.data(), readSize, lockedKeysStr.c_str());
+//         partitionedState = faasm::deserializeParState(stateBuffer);
+//     }
+
+//     // Return both the locked keys string and the partitioned state using
+//     // std::move to avoid reconstruction
+//     return std::make_pair(std::move(lockedKeysSet),
+//                           std::move(partitionedState));
+// }
+
+static uint32_t readBe32(const uint8_t* p)
+{
+    return (uint32_t(p[0]) << 24) | (uint32_t(p[1]) << 16) |
+           (uint32_t(p[2]) << 8) | (uint32_t(p[3]));
+}
+
 std::pair<std::set<std::string>, std::map<std::string, std::vector<uint8_t>>>
 getPartitionedStates(const std::vector<std::string>& todoKeys)
 {
@@ -31,23 +71,21 @@ getPartitionedStates(const std::vector<std::string>& todoKeys)
     int lockedKeysSize = todoKeysStr.size() + 1;
     auto lockedKeys = new uint8_t[lockedKeysSize];
 
-    // Read and lock the state size
-    size_t readSize =
-      faasmReadIndivFunctionStateSizeLock(todoKeysStr.c_str(), lockedKeys);
+    int32_t ptrOffset = faasmReadIndivFunctionStatePtr(todoKeysStr.c_str());
 
-    // Get the Locked Keys
-    std::string lockedKeysStr(reinterpret_cast<char*>(lockedKeys));
-    delete[] lockedKeys; // Clean up allocated memory
-    auto lockedKeysSet = faasm::splitStringToSet(lockedKeysStr, "|");
+    auto* base = reinterpret_cast<const uint8_t*>(uintptr_t(ptrOffset));
 
-    // Initialize the partitioned state map
-    std::map<std::string, std::vector<uint8_t>> partitionedState;
-    if (readSize != 0) {
-        // Read the state and deserialize it
-        std::vector<uint8_t> stateBuffer(readSize);
-        faasmReadIndivFunctionState(
-          stateBuffer.data(), readSize, lockedKeysStr.c_str());
-        partitionedState = faasm::deserializeParState(stateBuffer);
+    // First 4 bytes are the length of the data
+    uint32_t dataLen = readBe32(base);
+
+    // Get the serialized data
+    const uint8_t* payload = base + sizeof(uint32_t);
+    std::vector<uint8_t> serialized(payload, payload + dataLen);
+    auto partitionedState = deserializeFuncState(serialized);
+    // Get the locked keys
+    std::set<std::string> lockedKeysSet;
+    for (auto& kv : partitionedState) {
+        lockedKeysSet.insert(kv.first);
     }
 
     // Return both the locked keys string and the partitioned state using

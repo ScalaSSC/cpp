@@ -61,7 +61,8 @@ int main(int argc, char* argv[])
       [](const std::string& key,
          const std::map<std::string, std::vector<uint8_t>>& partitionedState)
       -> std::pair<long, int> {
-        if (partitionedState.find(key) != partitionedState.end()) {
+        if (partitionedState.find(key) != partitionedState.end() &&
+            partitionedState.at(key).size() > 0) {
             return deserialize(partitionedState.at(key));
         }
         return { 0L, 0 };
@@ -80,11 +81,11 @@ int main(int argc, char* argv[])
           int& count = state.second;
 
           // Just used for debugging
-          //   std::cout << "Processing key: " << key << ", idx: " << idx
-          //             << ", event_time: " << eventTime
-          //             << ", timeBucket: " << timeBucket << ", count: " <<
-          //             count
-          //             << std::endl;
+          // std::cout << "Processing key: " << key << ", idx: " << idx
+          //           << ", event_time: " << eventTime
+          //           << ", timeBucket: " << timeBucket << ", count: " <<
+          //           count
+          //           << std::endl;
 
           // If state is not initialized, we need to fetch it from Redis
           if (timeBucket == 0L && count == 0) {

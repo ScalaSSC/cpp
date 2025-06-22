@@ -333,6 +333,10 @@ long faasmReadIndivFunctionState(unsigned char* buffer,
     return __faasm_read_indiv_function_state(buffer, bufferLen, inputKeys);
 }
 
+int32_t faasmReadIndivFunctionStatePtr(const char* key){
+    return __faasm_read_indiv_function_state_ptr(key);
+}
+
 void faasmWriteIndivFunctionStateUnlock(const uint8_t* data, long dataLen)
 {
     __faasm_write_indiv_function_state_unlock(data, dataLen);

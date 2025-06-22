@@ -52,7 +52,8 @@ int main(int argc, char* argv[])
       [](const std::string& key,
          const std::map<std::string, std::vector<uint8_t>>& partitionedState)
       -> std::string {
-        if (partitionedState.find(key) != partitionedState.end()) {
+        if (partitionedState.find(key) != partitionedState.end() &&
+            partitionedState.at(key).size() > 0) {
             return deserialize(partitionedState.at(key));
         }
         return "Unknown";

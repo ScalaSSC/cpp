@@ -315,9 +315,10 @@ extern "C"
                                      long bufferLen,
                                      const char* inputKeys);
 
+    int32_t faasmReadIndivFunctionStatePtr(const char* key);
+
     void faasmWriteIndivFunctionStateUnlock(const uint8_t* data, long dataLen);
 
-    
     void faasmWritePersistentState(const char* key, const char* data);
 
     int32_t faasmReadPersistentState(const char* key);

@@ -213,6 +213,10 @@ HOST_IFACE_FUNC
 long __faasm_read_indiv_function_state(unsigned char* buffer,
                                        long bufferLen,
                                        const char* inputKeys);
+
+HOST_IFACE_FUNC
+int32_t __faasm_read_indiv_function_state_ptr(const char* key);
+
 HOST_IFACE_FUNC
 void __faasm_write_indiv_function_state_unlock(const uint8_t* data,
                                                long dataLen);
