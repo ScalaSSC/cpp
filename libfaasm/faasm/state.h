@@ -16,6 +16,8 @@ void maskDouble(unsigned int* maskArray, unsigned long idx);
 
 void zeroState(const char* key, size_t stateLen);
 
+std::vector<uint8_t> getFunctionStateLock();
+
 // rerturn <lockedKeys , partitionedState>
 std::pair<std::set<std::string>, std::map<std::string, std::vector<uint8_t>>>
 getPartitionedStates(const std::vector<std::string>& todoKeys);

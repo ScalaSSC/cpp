@@ -3,12 +3,19 @@
 #include "faasm/state.h"
 
 namespace faasm {
-void setOutputIdx(const std::string& outputString, int idx)
+// void setOutputIdx(const std::string& outputString, int idx)
+// {
+//     faasmSetOutputId(outputString.c_str(), outputString.length(), idx);
+// }
+
+void chainCallNamedId(const std::string& name,
+                      const std::map<std::string, std::string>& chainedInput,
+                      size_t idx)
 {
-    faasmSetOutputId(outputString.c_str(), outputString.length(), idx);
+    chainCallNamedId(name, chainedInput, static_cast<int>(idx));
 }
 
-void chainCallNamedId(std::string name,
+void chainCallNamedId(const std::string& name,
                       const std::map<std::string, std::string>& chainedInput,
                       int idx)
 {
@@ -17,6 +24,16 @@ void chainCallNamedId(std::string name,
 
     faasmChainNamedId(
       name.c_str(), chainedInputBytes.data(), chainedInputBytes.size(), idx);
+}
+
+void setOutputId(std::string& output, size_t idx)
+{
+    setOutputId(output, static_cast<int>(idx));
+}
+
+void setOutputId(std::string& output, int idx)
+{
+    faasmSetOutputId(output.c_str(), output.size(), idx);
 }
 
 TodoKeysMap generateTodoKeysMap(InputMapType& inputMap,

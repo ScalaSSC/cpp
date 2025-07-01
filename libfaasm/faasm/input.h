@@ -26,6 +26,9 @@ const std::string concatInput(const std::vector<std::string>& input);
 
 std::set<std::string> splitStringToSet(const std::string& str,
                                        const std::string& delimiter);
+
+std::map<std::string, std::string> parseJsonToMap(const std::string& json);
+
 }
 
 #endif

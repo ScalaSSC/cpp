@@ -173,21 +173,22 @@ void __faasm_create_function_state(const unsigned char* data,
 HOST_IFACE_FUNC
 void __faasm_write_function_state(const unsigned char* data, long dataLen);
 
+// lock == 0 means false, lock == 1 means true.
+HOST_IFACE_FUNC
+long __faasm_read_function_state_size(int lock);
+
 // Read the function state from state server. If it is partitioned stateful,
 // paasing the inputKeys will return required the states.
 HOST_IFACE_FUNC
 long __faasm_read_function_state(unsigned char* buffer, long bufferLen);
 
+// lock == 0 means false, lock == 1 means true.
 HOST_IFACE_FUNC
-unsigned char* __faasm_read_function_state_ptr_lock();
+int32_t __faasm_read_function_state_lock_ptr(int lock);
 
 HOST_IFACE_FUNC
 void __faasm_write_function_state_unlock(const unsigned char* data,
                                          long dataLen);
-
-// lock == 0 means false, lock == 1 means true.
-HOST_IFACE_FUNC
-long __faasm_read_function_state_size(int lock);
 
 HOST_IFACE_FUNC
 void __faasm_chain_invoke();

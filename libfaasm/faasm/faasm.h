@@ -19,11 +19,18 @@ using TodoKeyTuple = std::tuple<size_t, std::map<std::string, std::string>>;
 using TodoKeysMap = std::map<std::string, std::vector<TodoKeyTuple>>;
 
 // Function declarations.
-void setOutputIdx(const std::string& outputString, int idx);
+// void setOutputIdx(const std::string& outputString, int idx);
 
-void chainCallNamedId(std::string name,
+void chainCallNamedId(const std::string& name,
+                      const std::map<std::string, std::string>& chainedInput,
+                      size_t idx);
+
+void chainCallNamedId(const std::string& name,
                       const std::map<std::string, std::string>& chainedInput,
                       int idx);
+
+void setOutputId(std::string& output, size_t idx);
+void setOutputId(std::string& output, int idx);
 
 TodoKeysMap generateTodoKeysMap(InputMapType& inputMap,
                                 const std::string& partitionedAttributeName);

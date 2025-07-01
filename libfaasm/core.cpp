@@ -293,13 +293,22 @@ long faasmReadFunctionState(unsigned char* buffer, long bufferLen)
 }
 
 /**
+ * Gets the size of the function state
+ */
+int32_t faasmReadFunctionStateLockPtr()
+{
+    return __faasm_read_function_state_lock_ptr(1);
+}
+
+/**
  * Read function state data. It returns a pointer of vector<uint8_t>. If
  * nullptr is returned, means this state is created but not initialized. In
  * the same time the data is locked.
  */
 uint8_t* faasmReadFunctionStatePtrLock()
 {
-    return __faasm_read_function_state_ptr_lock();
+    // It is not implemented.
+    return nullptr;
 }
 
 size_t faasmReadPartitionedFunctionStateSizeLock(const char* inputKeys)
@@ -333,7 +342,8 @@ long faasmReadIndivFunctionState(unsigned char* buffer,
     return __faasm_read_indiv_function_state(buffer, bufferLen, inputKeys);
 }
 
-int32_t faasmReadIndivFunctionStatePtr(const char* key){
+int32_t faasmReadIndivFunctionStatePtr(const char* key)
+{
     return __faasm_read_indiv_function_state_ptr(key);
 }
 
@@ -351,11 +361,13 @@ void faasmWriteFunctionStateUnlock(const uint8_t* data, long dataLen)
     __faasm_write_function_state_unlock(data, dataLen);
 }
 
-void faasmWritePersistentState(const char* key, const char* data){
+void faasmWritePersistentState(const char* key, const char* data)
+{
     __faasm_write_persistent_state(key, data);
 }
 
-int32_t faasmReadPersistentState(const char* key){
+int32_t faasmReadPersistentState(const char* key)
+{
     return __faasm_read_persistent_state(key);
 }
 

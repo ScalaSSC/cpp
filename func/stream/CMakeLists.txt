@@ -19,11 +19,23 @@ stream_func(sd_spike_detect sd_spike_detect.cpp)
 stream_func(mo_alert mo_alert.cpp)
 stream_func(mo_anomaly mo_anomaly.cpp)
 stream_func(mo_score mo_score.cpp)
+
 stream_func(aa_deserialize aa_deserialize.cpp)
 stream_func(aa_filter aa_filter.cpp)
 stream_func(aa_projection aa_projection.cpp)
 stream_func(aa_join aa_join.cpp)
 stream_func(aa_campaign aa_campaign.cpp)
+
+stream_func(nwm_fail_aggregation nwm_fail_aggregation.cpp)
+stream_func(nwm_fail_aggrfilter nwm_fail_aggrfilter.cpp)
+stream_func(nwm_fail_filter nwm_fail_filter.cpp)
+stream_func(nwm_fail_functor nwm_fail_functor.cpp)
+stream_func(nwm_fail_parse nwm_fail_parse.cpp)
+stream_func(nwm_join nwm_join.cpp)
+stream_func(nwm_parse_lines nwm_parse_lines.cpp)
+stream_func(nwm_split nwm_split.cpp)
+stream_func(nwm_success_filter nwm_success_filter.cpp)
+stream_func(nwm_success_parse nwm_success_parse.cpp)
 
 # Custom target to group all the stream functions
 add_custom_target(stream_all_funcs DEPENDS ${ALL_STREAM_FUNCS})

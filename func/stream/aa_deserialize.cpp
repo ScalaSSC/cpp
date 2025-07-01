@@ -13,79 +13,6 @@
 #include <string>
 #include <vector>
 
-std::map<std::string, std::string> parseJsonToMap(const std::string& json) {
-    std::map<std::string, std::string> result;
-    size_t pos = 0, n = json.size();
-
-    auto skipWs = [&]() {
-        while (pos < n && std::isspace((unsigned char)json[pos])) ++pos;
-    };
-
-    skipWs();
-    if (pos >= n || json[pos] != '{') {
-        std::cerr << "parseJsonToMap: expected '{' at beginning\n";
-        return result;
-    }
-    ++pos;
-    skipWs();
-
-    while (pos < n && json[pos] != '}') {
-        if (json[pos] != '"') {
-            std::cerr << "parseJsonToMap: expected '\"' at start of key\n";
-            break;
-        }
-        ++pos;
-        size_t keyStart = pos;
-        while (pos < n && json[pos] != '"') {
-            if (json[pos] == '\\') pos += 2;
-            else ++pos;
-        }
-        if (pos >= n) {
-            std::cerr << "parseJsonToMap: unterminated key string\n";
-            break;
-        }
-        std::string key = json.substr(keyStart, pos - keyStart);
-        ++pos; skipWs();
-
-        if (pos >= n || json[pos] != ':') {
-            std::cerr << "parseJsonToMap: expected ':' after key\n";
-            break;
-        }
-        ++pos; skipWs();
-
-        if (pos >= n || json[pos] != '"') {
-            std::cerr << "parseJsonToMap: expected '\"' at start of value\n";
-            break;
-        }
-        ++pos;
-        size_t valStart = pos;
-        while (pos < n && json[pos] != '"') {
-            if (json[pos] == '\\') pos += 2;
-            else ++pos;
-        }
-        if (pos >= n) {
-            std::cerr << "parseJsonToMap: unterminated value string\n";
-            break;
-        }
-        std::string val = json.substr(valStart, pos - valStart);
-        ++pos;
-
-        result.emplace(std::move(key), std::move(val));
-        skipWs();
-        if (pos < n && json[pos] == ',') {
-            ++pos; skipWs();
-        } else {
-            break;
-        }
-    }
-
-    // no throw on missing '}' — just log
-    if (pos >= n || json[pos] != '}') {
-        std::cerr << "parseJsonToMap: expected '}' at end\n";
-    }
-    return result;
-}
-
 int main(int argc, char* argv[])
 {
     // get the inputMap (inputdata)
@@ -105,7 +32,7 @@ int main(int argc, char* argv[])
         // Just used for debugging
         // std::cout << "Processing input JSON: " << inputJson << std::endl;
 
-        auto parsedMap = parseJsonToMap(inputJson);
+        auto parsedMap = faasm::parseJsonToMap(inputJson);
         std::map<std::string, std::string> chainedInput;
         chainedInput["user_id"] = parsedMap["user_id"];
         chainedInput["page_id"] = parsedMap["page_id"];

@@ -109,4 +109,26 @@ void setPersistentState(const std::string& key, const std::string& value)
     faasmWritePersistentState(key.c_str(), valueCStr);
 }
 
+std::vector<uint8_t> getFunctionStateLock()
+{
+    // Get and initialize the Function
+    auto ptr = faasmReadFunctionStateLockPtr();
+
+    if (ptr == 0) {
+        return {};
+    }
+
+    // ptr is an offset in linear memory; treat it as a byte pointer
+    uint8_t* base = reinterpret_cast<uint8_t*>(ptr);
+
+    // decode 4-byte big-endian length
+    uint32_t len = (uint32_t(base[0]) << 24) | (uint32_t(base[1]) << 16) |
+                   (uint32_t(base[2]) << 8) | uint32_t(base[3]);
+
+    // copy payload into a vector and return
+    std::vector<uint8_t> result(len);
+    std::memcpy(result.data(), base + 4, len);
+    return result;
+}
+
 }

@@ -260,6 +260,8 @@ extern "C"
      */
     long faasmReadFunctionState(unsigned char* buffer, long bufferLen);
 
+    int32_t faasmReadFunctionStateLockPtr();
+
     /**
      * Read function state. InputKeys is used for partitioned stateful.
      */
