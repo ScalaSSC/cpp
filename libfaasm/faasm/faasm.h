@@ -29,8 +29,8 @@ void chainCallNamedId(const std::string& name,
                       const std::map<std::string, std::string>& chainedInput,
                       int idx);
 
-void setOutputId(std::string& output, size_t idx);
-void setOutputId(std::string& output, int idx);
+void setOutputId(const std::string& output, size_t idx);
+void setOutputId(const std::string& output, int idx);
 
 TodoKeysMap generateTodoKeysMap(InputMapType& inputMap,
                                 const std::string& partitionedAttributeName);

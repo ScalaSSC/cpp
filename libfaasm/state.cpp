@@ -131,4 +131,9 @@ std::vector<uint8_t> getFunctionStateLock()
     return result;
 }
 
+void setFunctionStateUnlock(const std::vector<uint8_t>& state)
+{
+    faasmWriteFunctionStateUnlock(state.data(), state.size());
+}
+
 }

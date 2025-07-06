@@ -37,6 +37,17 @@ stream_func(nwm_split nwm_split.cpp)
 stream_func(nwm_success_filter nwm_success_filter.cpp)
 stream_func(nwm_success_parse nwm_success_parse.cpp)
 
+stream_func(etl_senml_parse etl_senml_parse.cpp)
+stream_func(etl_filter_range etl_filter_range.cpp)
+stream_func(etl_filter_bloom etl_filter_bloom.cpp)
+stream_func(etl_interpolation etl_interpolation.cpp)
+stream_func(etl_join etl_join.cpp)
+stream_func(etl_annotate etl_annotate.cpp)
+stream_func(etl_csv2ml etl_csv2ml.cpp)
+stream_func(etl_mqtt etl_mqtt.cpp)
+stream_func(etl_azure etl_azure.cpp)
+stream_func(etl_sink etl_sink.cpp)
+
 # Custom target to group all the stream functions
 add_custom_target(stream_all_funcs DEPENDS ${ALL_STREAM_FUNCS})
 # Turn on WASM profiling

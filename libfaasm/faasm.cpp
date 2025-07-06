@@ -26,12 +26,12 @@ void chainCallNamedId(const std::string& name,
       name.c_str(), chainedInputBytes.data(), chainedInputBytes.size(), idx);
 }
 
-void setOutputId(std::string& output, size_t idx)
+void setOutputId(const std::string& output, size_t idx)
 {
     setOutputId(output, static_cast<int>(idx));
 }
 
-void setOutputId(std::string& output, int idx)
+void setOutputId(const std::string& output, int idx)
 {
     faasmSetOutputId(output.c_str(), output.size(), idx);
 }
