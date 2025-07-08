@@ -3,14 +3,8 @@
 #include <faasm/serialization.h>
 #include <faasm/state.h>
 
-#include <cstring>
 #include <iostream>
 #include <list>
-#include <map>
-#include <set>
-#include <string>
-#include <utility>
-#include <vector>
 
 // We must register the function_state in scheduler!
 
@@ -65,12 +59,12 @@ std::pair<double, std::list<double>> deserialize(
 
 int main(int argc, char* argv[])
 {
-    int windowlength = 100;
+    const int windowlength = 100;
+
     // get the inputMap (inputdata)
     auto inputMap = faasm::getInputMap();
     // <partitioned Attribute, <msgIdx, inputTuple>>
-    auto todoKeysMap =
-      faasm::generateTodoKeysMap(inputMap, "partitionedAttribute");
+    auto todoKeysMap = faasm::generateTodoKeysMap(inputMap, "sensor_id");
 
     auto initState =
       [](const std::string& key,
@@ -108,6 +102,7 @@ int main(int argc, char* argv[])
 
           // Build the chained input.
           std::map<std::string, std::string> chainedInput;
+          chainedInput["sensor_id"] = tupleMap["sensor_id"];
           chainedInput["movingAverage"] = std::to_string(avg);
           chainedInput["temperature"] = std::to_string(todoValue);
 
@@ -118,18 +113,6 @@ int main(int argc, char* argv[])
 
     faasm::processTodoMap<std::pair<double, std::list<double>>>(
       todoKeysMap, processOperator, initState, serialize);
-
-    // uint64_t end = faasmGetMicros();
-    // uint64_t diff = end - start;
-    // Print start, end, and duration in microseconds
-
-    // int inputSize = inputMap.size();
-    // std::string output =
-    //   "mo_moving_avg_input_size: " + std::to_string(inputSize) +
-    //   " and duration:" + std::to_string(diff);
-    // for (size_t i = 0; i < inputMap.size(); i++) {
-    //     faasmSetOutputId(output.c_str(), output.size(), i);
-    // }
 
     faasmChainInvoke();
 
