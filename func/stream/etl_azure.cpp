@@ -105,7 +105,7 @@ int main(int argc, char* argv[])
                 azureSave += state[i];
                 azureSave += ",";
             }
-            // faasm::setPersistentState("azure_save", azureSave);
+            faasm::setPersistentState("azure_save", azureSave);
             state.clear();
         }
 

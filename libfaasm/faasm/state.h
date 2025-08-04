@@ -28,6 +28,10 @@ std::string getPersistentState(const std::string& key);
 
 void setPersistentState(const std::string& key, const std::string& value);
 
+std::string getPersistentStateRemote(const std::string& key);
+
+void setPersistentStateRemote(const std::string& key, const std::string& value);
+
 } // namespace faasm
 
 #endif

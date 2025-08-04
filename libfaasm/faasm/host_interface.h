@@ -229,6 +229,12 @@ HOST_IFACE_FUNC
 void __faasm_write_persistent_state(const char* key, const char* value);
 
 HOST_IFACE_FUNC
+int32_t __faasm_read_persistent_state_remote(const char* key);
+
+HOST_IFACE_FUNC
+void __faasm_write_persistent_state_remote(const char* key, const char* value);
+
+HOST_IFACE_FUNC
 void __faasm_set_output_id(const char* newOutput, long outputLen, int idx);
 
 HOST_IFACE_FUNC

@@ -67,3 +67,5 @@ __faasm_get_micros
 
 __faasm_read_persistent_state
 __faasm_write_persistent_state
+__faasm_read_persistent_state_remote
+__faasm_write_persistent_state_remote

@@ -1,0 +1,19 @@
+#include "faasm/core.h"
+#include "faasm/faasm.h"
+#include "faasm/input.h"
+#include <faasm/serialization.h>
+#include <iostream>
+#include <map>
+#include <random>
+#include <stdio.h>
+#include <string>
+#include <vector>
+
+int main(int argc, char* argv[])
+{
+    // get the inputMap (inputdata)
+
+    auto inputMap = faasm::getInputMap();
+
+    return 0;
+}

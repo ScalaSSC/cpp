@@ -48,6 +48,12 @@ stream_func(etl_mqtt etl_mqtt.cpp)
 stream_func(etl_azure etl_azure.cpp)
 stream_func(etl_sink etl_sink.cpp)
 
+stream_func(state_stateless state_stateless.cpp)
+stream_func(state_local_once state_local_once.cpp)
+stream_func(state_local_twice state_local_twice.cpp)
+stream_func(state_remote_once state_remote_once.cpp)
+stream_func(state_remote_twice state_remote_twice.cpp)
+
 # Custom target to group all the stream functions
 add_custom_target(stream_all_funcs DEPENDS ${ALL_STREAM_FUNCS})
 # Turn on WASM profiling

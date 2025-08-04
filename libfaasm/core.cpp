@@ -371,6 +371,16 @@ int32_t faasmReadPersistentState(const char* key)
     return __faasm_read_persistent_state(key);
 }
 
+void faasmWritePersistentStateRemote(const char* key, const char* data)
+{
+    __faasm_write_persistent_state_remote(key, data);
+}
+
+int32_t faasmReadPersistentStateRemote(const char* key)
+{
+    return __faasm_read_persistent_state_remote(key);
+}
+
 void faasmChainInvoke()
 {
     __faasm_chain_invoke();
