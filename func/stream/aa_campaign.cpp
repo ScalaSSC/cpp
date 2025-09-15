@@ -91,7 +91,10 @@ int main(int argc, char* argv[])
           if (timeBucket == 0L && count == 0) {
               timeBucket = eventTime;
           }
-          if (eventTime - timeBucket > 1000) {
+          // To save source memory, we repetitively the input data. In this
+          // case, at rerun begining, the eventTime < timeBucket - 100000.
+          if (eventTime - timeBucket > 1000 ||
+              eventTime < timeBucket - 100000) {
               // Flush the state window.
               std::string storeKey = std::to_string(timeBucket) + "_" + key;
               std::string storeValue = std::to_string(count);
