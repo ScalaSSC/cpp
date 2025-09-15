@@ -99,7 +99,8 @@ int main(int argc, char* argv[])
         auto inputTuple = inputMap[std::to_string(idx)];
 
         state.push_back(inputTuple["obs_val"]);
-        if (state.size() >= 3) {
+        // It is one when testing the end-to-end latency 
+        if (state.size() >= 1) {
             std::string azureSave;
             for (size_t i = 0; i < state.size(); ++i) {
                 azureSave += state[i];

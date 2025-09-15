@@ -84,7 +84,8 @@ int main(int argc, char* argv[])
           int obsVal = std::stoi(inputTuple["obs_val"]);
 
           state.push_back(obsVal);
-          if (state.size() >= 3) {
+          // It is set to one when testing end-to-end latency
+          if (state.size() >= 1) {
               std::string joinedValues;
               bool isFirst = true;
               for (const auto& val : state) {
