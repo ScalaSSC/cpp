@@ -85,7 +85,7 @@ int main(int argc, char* argv[])
 
           state.push_back(obsVal);
           // It is set to one when testing end-to-end latency
-          if (state.size() >= 1) {
+          if (state.size() >= 3) {
               std::string joinedValues;
               bool isFirst = true;
               for (const auto& val : state) {
