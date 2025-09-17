@@ -26,6 +26,13 @@ stream_func(aa_projection aa_projection.cpp)
 stream_func(aa_join aa_join.cpp)
 stream_func(aa_campaign aa_campaign.cpp)
 
+stream_func(pl_trans pl_trans.cpp)
+stream_func(pl_filter pl_filter.cpp)
+stream_func(pl_join pl_join.cpp)
+stream_func(pl_filter_second pl_filter_second.cpp)
+stream_func(pl_aggregation pl_aggregation.cpp)
+stream_func(pl_sink pl_sink.cpp)
+
 stream_func(nwm_fail_aggregation nwm_fail_aggregation.cpp)
 stream_func(nwm_fail_aggrfilter nwm_fail_aggrfilter.cpp)
 stream_func(nwm_fail_filter nwm_fail_filter.cpp)
