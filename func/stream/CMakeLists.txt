@@ -61,6 +61,17 @@ stream_func(state_local_twice state_local_twice.cpp)
 stream_func(state_remote_once state_remote_once.cpp)
 stream_func(state_remote_twice state_remote_twice.cpp)
 
+stream_func(lineten_one lineten_one.cpp)
+stream_func(lineten_two lineten_two.cpp)
+stream_func(lineten_three lineten_three.cpp)
+stream_func(lineten_four lineten_four.cpp)
+stream_func(lineten_five lineten_five.cpp)
+stream_func(lineten_six lineten_six.cpp)
+stream_func(lineten_seven lineten_seven.cpp)
+stream_func(lineten_eight lineten_eight.cpp)
+stream_func(lineten_nine lineten_nine.cpp)
+stream_func(lineten_ten lineten_ten.cpp)
+
 # Custom target to group all the stream functions
 add_custom_target(stream_all_funcs DEPENDS ${ALL_STREAM_FUNCS})
 # Turn on WASM profiling
